@@ -1,0 +1,125 @@
+html
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <style>
+        html, body {
+            margin: 0; padding: 0;
+            width: 100vw; height: 100vh;
+            background: transparent !important;
+            overflow: hidden; position: fixed;
+            pointer-events: none;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        #clt-icon {
+            width: 60px; height: 60px;
+            background: #000; border: 2.5px solid #ff0000;
+            border-radius: 50%; position: fixed;
+            top: 150px; left: 15px; z-index: 2147483647;
+            display: flex; align-items: center; justify-content: center;
+            color: #ff0000; font-weight: 900; font-size: 14px;
+            box-shadow: 0 0 15px #ff0000;
+            pointer-events: auto; touch-action: none; cursor: pointer;
+        }
+
+        #clt-panel {
+            width: 220px; background: rgba(5, 5, 5, 0.98);
+            border: 1.5px solid #ff0000; border-radius: 12px;
+            position: fixed; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 2147483647; display: none;
+            box-shadow: 0 0 40px #000; pointer-events: auto;
+        }
+
+        .bar {
+            height: 35px; display: flex; justify-content: space-between;
+            align-items: center; padding: 0 12px;
+            border-bottom: 1px solid #222; cursor: move;
+        }
+
+        .menu-title { color: #ff0000; font-size: 10px; font-weight: bold; }
+        .controls { display: flex; gap: 15px; color: #fff; font-size: 22px; font-weight: bold; }
+        
+        .content { padding: 15px; }
+
+        .option-btn {
+            width: 100%; background: #111; border: 1px solid #333; 
+            color: #fff; padding: 10px; margin-bottom: 8px;
+            border-radius: 6px; font-size: 10px; font-weight: bold;
+            text-transform: uppercase; text-align: left;
+            display: flex; justify-content: space-between;
+            transition: 0.3s; cursor: pointer;
+        }
+
+        .option-btn.active {
+            border-color: #00ff00;
+            color: #00ff00;
+            background: #051505;
+        }
+
+        .apply-btn {
+            width: 100%; background: #ff0000; color: #000;
+            border: none; padding: 12px; font-weight: 900;
+            border-radius: 6px; font-size: 11px; cursor: pointer;
+            text-transform: uppercase; margin-top: 5px;
+        }
+    </style>
+</head>
+<body onload="abrirFF()">
+
+<div id="clt-icon">PEDRO</div>
+
+<div id="clt-panel">
+    <div id="drag" class="bar">
+        <div class="menu-title">PEDROPAINEIS</div>
+        <div class="controls">
+            <div onclick="min()" style="cursor:pointer">_</div>
+            <div onclick="off()" style="cursor:pointer">×</div>
+        </div>
+    </div>
+    <div class="content">
+        <div class="option-btn" onclick="toggleFunc(this)">AIMLOCK VIP <span>[OFF]</span></div>
+        <div class="option-btn" onclick="toggleFunc(this)">REGEDIT MOBILE <span>[OFF]</span></div>
+        <div class="option-btn" onclick="toggleFunc(this)">SENSI EXTREME <span>[OFF]</span></div>
+        
+        <button class="apply-btn" onclick="abrirFF()">INJETAR E ABRIR FF</button>
+    </div>
+</div>
+
+<script>
+    const icon = document.getElementById('clt-icon');
+    const panel = document.getElementById('clt-panel');
+    const drag = document.getElementById('drag');
+
+    function toggleFunc(element) {
+        element.classList.toggle('active');
+        const span = element.querySelector('span');
+        span.innerText = element.classList.contains('active') ? '[ON]' : '[OFF]';
+    }
+
+    function abrirFF() {
+        window.location.href = "intent://#Intent;package=com.dts.freefireth;scheme=android-app;end";
+    }
+
+    icon.onclick = () => { panel.style.display = 'block'; icon.style.display = 'none'; };
+    function min() { panel.style.display = 'none'; icon.style.display = 'flex'; }
+    function off() { if(confirm("Sair?")) { panel.style.display='none'; icon.style.display='none'; } }
+
+    icon.addEventListener('touchmove', (e) => {
+        let t = e.touches[0];
+        icon.style.left = (t.pageX - 30) + 'px';
+        icon.style.top = (t.pageY - 30) + 'px';
+    });
+
+    drag.addEventListener('touchmove', (e) => {
+        let t = e.touches[0];
+        panel.style.transform = 'none';
+        panel.style.left = (t.pageX - 110) + 'px';
+        panel.style.top = (t.pageY - 15) + 'px';
+    });
+</script>
+</body>
+</html>
